@@ -1,0 +1,16 @@
+CREATE TABLE [dbo].[TaskConfig](
+	[Robot] [nvarchar](255) NULL UNIQUE,
+	[Schedule] [nvarchar](255) NULL,
+	[TaskName] [nvarchar](255) NULL,
+	[MaxRetrys] [numeric](19, 0) NULL,
+	[Timeout] [numeric](19, 0) NULL,
+	[AbandonLimit] [numeric](19, 0) NULL,
+	[Delay] [numeric](19, 0) NULL,
+	[ObjectKey] [nvarchar](255) NOT NULL PRIMARY KEY,
+	[RobotName] [nvarchar](255) NULL,
+	[ExecutionId] [nvarchar](50) NULL,
+	[FirstExtracted] [datetime2](7) NULL,
+	[LastExtracted] [datetime2](7) NULL,
+	[ExtractedInLastRun] [nvarchar](1) NULL,
+	[LastUpdated] [datetime2](7) NULL)
+

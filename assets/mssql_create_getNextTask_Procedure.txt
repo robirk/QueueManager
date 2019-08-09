@@ -1,0 +1,12 @@
+CREATE PROCEDURE [dbo].[getNextTask] @robotName varchar(255)
+AS
+BEGIN
+	SET NOCOUNT ON;
+	DECLARE @QID NVARCHAR(255), @MaxRetrys numeric(19,0), @QC datetime2(7), @QP numeric (19,0);
+	SET @MaxRetrys = ( select MaxRetrys from TaskConfig where Robot = @robotName);
+	BEGIN TRANSACTION;
+	SELECT @QID = MIN(ID), @QC = MIN(Created), @QP = MAX(Priority) FROM TaskQueue WHERE Robot = @robotName and (Status = 'new' or (Status = 'failed' and Retry < @MaxRetrys and GETDATE() > DATEADD(n, 3, LastUpdated)));
+	UPDATE TaskQueue set Status = 'in progress', Retry = Retry + 1, Started = GETDATE(), Ended = NULL where ID = @QID and Robot = @robotName;
+	COMMIT;
+	SELECT @QID as ID;
+END

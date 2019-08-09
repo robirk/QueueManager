@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<object class="kapow.robot.common.domain.Type" serializationversion="0">
+  <prologue>
+    <saved-by-versions>
+      <version>10.3.0.1</version>
+    </saved-by-versions>
+  </prologue>
+  <property name="attributes" class="kapow.robot.common.domain.Attributes">
+    <object class="kapow.robot.common.domain.Attribute" serializationversion="0">
+      <property name="name" class="String">Robot</property>
+      <property name="type" class="kapow.robot.plugin.common.domain.StringAttributeType" id="0"/>
+      <property name="required" class="Boolean">true</property>
+      <property name="useWhenComparingObjects" class="Boolean">true</property>
+      <property name="comment" class="String">Robot name that will execute processing of this type of tasks.</property>
+    </object>
+    <object class="kapow.robot.common.domain.Attribute" serializationversion="0">
+      <property name="name" class="String">Schedule</property>
+      <property name="type" class="kapow.robot.plugin.common.domain.StringAttributeType"/>
+      <property name="required" class="Boolean">true</property>
+      <property name="comment" class="String">Name of schedule that will start robots</property>
+    </object>
+    <object class="kapow.robot.common.domain.Attribute" serializationversion="0">
+      <property name="name" class="String">TaskName</property>
+      <property name="type" idref="0"/>
+      <property name="required" class="Boolean">true</property>
+      <property name="comment" class="String">Descriptive name of tasks</property>
+    </object>
+    <object class="kapow.robot.common.domain.Attribute" serializationversion="0">
+      <property name="name" class="String">MaxRetrys</property>
+      <property name="type" class="kapow.robot.plugin.common.domain.IntegerAttributeType"/>
+      <property name="defaultValue" class="String">3</property>
+      <property name="required" class="Boolean">true</property>
+      <property name="comment" class="String">Maximum retry attempts</property>
+    </object>
+    <object class="kapow.robot.common.domain.Attribute" serializationversion="0">
+      <property name="name" class="String">Timeout</property>
+      <property name="type" class="kapow.robot.plugin.common.domain.IntegerAttributeType"/>
+      <property name="defaultValue" class="String">10</property>
+      <property name="required" class="Boolean">true</property>
+      <property name="comment" class="String">Time in minutes within a new task should be processed. It the limit exeeds task will be handled as "overdue".</property>
+    </object>
+    <object class="kapow.robot.common.domain.Attribute" serializationversion="0">
+      <property name="name" class="String">AbandonLimit</property>
+      <property name="type" class="kapow.robot.plugin.common.domain.IntegerAttributeType"/>
+      <property name="defaultValue" class="String">60</property>
+      <property name="required" class="Boolean">true</property>
+      <property name="comment" class="String">Time in minutes within a task "in progress" shoud be completed. If it exceeds this limit, the status will be set to 'abandoned'</property>
+    </object>
+    <object class="kapow.robot.common.domain.Attribute" serializationversion="0">
+      <property name="name" class="String">Delay</property>
+      <property name="type" class="kapow.robot.plugin.common.domain.IntegerAttributeType"/>
+      <property name="defaultValue" class="String">0</property>
+      <property name="comment" class="String">Time in minutes during which a new added task should be delayed.</property>
+    </object>
+  </property>
+  <property name="comment" class="String">Queued Processing Task Configuration.</property>
+</object>

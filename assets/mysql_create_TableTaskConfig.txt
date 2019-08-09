@@ -1,0 +1,18 @@
+CREATE TABLE taskconfig (
+  Robot varchar(255) DEFAULT NULL,
+  Schedule varchar(255) DEFAULT NULL,
+  TaskName varchar(255) DEFAULT NULL,
+  MaxRetrys bigint(20) DEFAULT NULL,
+  Timeout bigint(20) DEFAULT NULL,
+  AbandonLimit bigint(20) DEFAULT NULL,
+  Delay bigint(20) DEFAULT NULL,
+  ObjectKey varchar(255) NOT NULL,
+  RobotName varchar(255) DEFAULT NULL,
+  ExecutionId varchar(50) DEFAULT NULL,
+  FirstExtracted datetime DEFAULT NULL,
+  LastExtracted datetime DEFAULT NULL,
+  ExtractedInLastRun varchar(1) DEFAULT NULL,
+  LastUpdated datetime DEFAULT NULL,
+  PRIMARY KEY (ObjectKey),
+  UNIQUE KEY Robot_UNIQUE (Robot)
+);

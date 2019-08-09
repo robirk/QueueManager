@@ -1,0 +1,25 @@
+CREATE 
+    ALGORITHM = UNDEFINED 
+    SQL SECURITY DEFINER
+VIEW viewoverduetasks AS
+    SELECT 
+        `tc`.`TaskName` AS `TaskName`,
+        `tq`.`ID` AS `ID`,
+        `tq`.`Reference` AS `Reference`,
+        `tq`.`Status` AS `Status`,
+        `tq`.`Priority` AS `Priority`,
+        `tq`.`Robot` AS `Robot`,
+        `tq`.`Created` AS `Created`,
+        `tq`.`Started` AS `Started`,
+        `tq`.`Ended` AS `Ended`,
+        `tq`.`Retry` AS `Retry`
+    FROM
+        (`taskqueue` `tq`
+        LEFT JOIN `taskconfig` `tc` ON ((`tc`.`Robot` = `tq`.`Robot`)))
+    WHERE
+        ((((`tq`.`Created` + INTERVAL `tc`.`Timeout` MINUTE) < NOW())
+            AND (`tq`.`Status` = 'new'))
+            OR ((`tq`.`Status` = 'failed')
+            AND ((`tq`.`Created` + INTERVAL `tc`.`Timeout` MINUTE) < NOW())
+            AND (`tq`.`Retry` < `tc`.`MaxRetrys`)))
+    ORDER BY `tq`.`Robot` , `tq`.`Created`;

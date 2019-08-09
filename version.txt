@@ -1,0 +1,10 @@
+01 - initial realiease
+02 - Added PurchaseOrderXML extract and load example robots.
+     Added delay status
+     Refactored getNextTask stored procedure
+03 - fixed issue with stored procedure call in 03_maintain.Tasks.robot. The database schema generated a Stored Procedure called setAbandonedStatus but the maintain task robot was referring to a sp called updateStatus for both SQL Server and mySQL
+04 - removed unneccesary statement in mysql_create_getNextTask_Procedure.txt
+     Refactored getNextTask stored procedure
+     Refactored updateStatus stored procedure
+05 - Fixed bug in 03_maintainTasks.robot
+06 - Fixed Maintain task bot issue with activation deactivation finder

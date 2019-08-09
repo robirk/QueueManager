@@ -1,0 +1,23 @@
+DELIMITER ;;
+CREATE PROCEDURE updateStatus ()
+BEGIN
+	UPDATE taskqueue
+	LEFT JOIN taskconfig ON taskconfig.Robot = taskqueue.Robot
+	SET taskqueue.Status = 'abandoned'
+	WHERE date_add(taskqueue.Created, INTERVAL taskconfig.AbandonLimit MINUTE) < NOW()
+	AND taskqueue.Status = 'in progress';
+    
+	UPDATE taskqueue
+	LEFT JOIN taskconfig ON taskconfig.Robot = taskqueue.Robot
+	SET taskqueue.Status = 'new', taskqueue.Created = NOW()
+	WHERE date_add(taskqueue.Created, INTERVAL taskconfig.Delay MINUTE) < NOW()
+	AND taskqueue.Status = 'delay';
+
+	UPDATE taskqueue
+	LEFT JOIN taskconfig ON taskconfig.Robot = taskqueue.Robot
+	SET taskqueue.Status = 'error', taskqueue.Exception = 'Maximum number of retry attempts reached!'
+	WHERE taskqueue.Retry >= taskconfig.MaxRetrys
+	AND taskqueue.Status = 'failed';
+END;;
+
+DELIMITER ;

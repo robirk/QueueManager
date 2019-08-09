@@ -1,0 +1,8 @@
+CREATE VIEW [dbo].[ViewOverdueTasks]
+AS
+SELECT        TOP (100) PERCENT tc.TaskName, tq.ID, tq.Reference, tq.Status, tq.Priority, tq.Robot, tq.Created, tq.Started, tq.Ended, tq.Retry
+FROM            dbo.TaskQueue AS tq LEFT OUTER JOIN
+                         dbo.TaskConfig AS tc ON tc.Robot = tq.Robot
+WHERE        (tq.Status = 'new') AND (DATEADD(n, tc.Timeout, tq.Created) < GETDATE()) OR
+                         (tq.Status = 'failed') AND (DATEADD(n, tc.Timeout, tq.Created) < GETDATE()) AND (tq.Retry < tc.MaxRetrys)
+ORDER BY tq.Robot, tq.Created

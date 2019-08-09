@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- 
+This is an example file of a PurchaseOrder XML that is created in the addTasks robot.
+Set Tag and Insert Content steps are persiting the types PurchaseOrder, Address and Item as XML.
+-->
+<PurchaseOrder>
+  <PurchaseOrderNumber>PO-01000</PurchaseOrderNumber>
+  <PurchaseOrderReference/>
+  <CustomerNumber>485148755</CustomerNumber>
+  <OrderDate>2018-03-08 00:00:00.0</OrderDate>
+  <ShipDate/>
+  <DeliveryNotes/>
+  <ShippingPrice>16</ShippingPrice>
+  <Tax>222.77</Tax>
+  <Currency>GBP</Currency>
+  <Address type="Customer">
+    <Name>T1 Enterprises</Name>
+    <Name1>Department Back Office</Name1>
+    <Street>Somewhere Ave. 4</Street>
+    <Postalcode>74555</Postalcode>
+    <City>Sun City</City>
+    <Country>UK</Country>
+  </Address>
+  <items>
+    <Item count="1">
+      <PartNumber/>
+      <ProductName>Makita DGA452Z 4½" Angle Grinder 18V</ProductName>
+      <Quantity>1</Quantity>
+      <UOM>Each</UOM>
+      <Price>129.99</Price>
+      <Currency/>
+      <ShipDate/>
+      <Comment/>
+    </Item>
+  </items>
+</PurchaseOrder>

@@ -1,0 +1,25 @@
+CREATE PROCEDURE [dbo].[updateStatus]
+AS
+BEGIN
+	SET NOCOUNT ON;
+
+	 UPDATE tq
+	 SET tq.Status = 'abandoned'
+	 FROM dbo.TaskQueue AS tq
+	 LEFT JOIN dbo.TaskConfig AS tc ON tc.Robot = tq.Robot
+     WHERE (DATEADD(n, tc.AbandonLimit, tq.Created) < GETDATE()) AND (tq.Status = 'in progress')
+
+	 UPDATE tq
+	 SET tq.Status = 'new', tq.Created = GETDATE()
+	 FROM dbo.TaskQueue AS tq
+	 LEFT JOIN dbo.TaskConfig AS tc ON tc.Robot = tq.Robot
+     WHERE (DATEADD(n, tc.Delay, tq.Created) < GETDATE()) AND (tq.Status = 'delay')
+
+	 UPDATE tq
+	 SET tq.Status = 'error', tq.Exception = 'Maximum number of retry attempts reached!'
+	 FROM dbo.TaskQueue AS tq
+	 LEFT JOIN dbo.TaskConfig AS tc ON tc.Robot = tq.Robot
+     WHERE tq.Status = 'failed' AND tq.Retry >= tc.MaxRetrys;
+END
+
+

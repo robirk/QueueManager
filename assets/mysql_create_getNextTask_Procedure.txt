@@ -1,0 +1,15 @@
+DELIMITER ;;
+CREATE PROCEDURE getNextTask(IN robotName varchar(255))
+BEGIN
+	SET autocommit=0;
+	start transaction; 
+	select @ID := ID As ID, min(created) FROM taskqueue tq
+			LEFT JOIN taskconfig tc ON tc.Robot = tq.Robot
+			where tq.Robot = robotName and (tq.Status = 'new' or (tq.Status = 'failed' and tq.Retry < tc.MaxRetrys and NOW() > date_add(tq.LastUpdated, INTERVAL 3 MINUTE))) 
+			order by tq.Priority, tq.Created
+			for update;
+	update taskqueue set Status = 'in progress', Retry = Retry + 1, Started = NOW(), Ended = Null where ID = @ID and Robot = robotName;
+	commit; 
+    SET autocommit=1;
+END;;
+DELIMITER ;
